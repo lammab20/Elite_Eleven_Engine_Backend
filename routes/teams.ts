@@ -14,12 +14,14 @@ router.get("/",async (request: Request, res: Response) => {
 })
 
 router.post("/",async (req: Request, res: Response) => {
-    const newTeam = new Teams(req.body);
-    newTeam.save().then(x => {
+    try {
+        const newTeam = new Teams(req.body);
+        await newTeam.save();
         res.status(201).json(newTeam);
-    }).catch(error => {
-        res.status(500).send("POST-Error:" + error);
-    });
+    } catch (error) {
+        console.error("Fehler beim Speichern des Teams:", error);
+        res.status(500).send("POST-Error: " );
+    }
 })
 
 module.exports = router;

@@ -21,9 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 var cors = require('cors');
 
 const corsOptions = {
-    origin: '*',
+    origin: '*'
 };
 
+app.use(cors(corsOptions));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/teams', teamsRouter);

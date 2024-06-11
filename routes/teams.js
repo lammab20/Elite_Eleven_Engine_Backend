@@ -26,11 +26,14 @@ router.get("/", (request, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newTeam = new Teams_model_db_1.Teams(req.body);
-    newTeam.save().then(x => {
+    try {
+        const newTeam = new Teams_model_db_1.Teams(req.body);
+        yield newTeam.save();
         res.status(201).json(newTeam);
-    }).catch(error => {
-        res.status(500).send("POST-Error:" + error);
-    });
+    }
+    catch (error) {
+        console.error("Fehler beim Speichern des Teams:", error);
+        res.status(500).send("POST-Error: ");
+    }
 }));
 module.exports = router;
